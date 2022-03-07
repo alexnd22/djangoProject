@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block title %}
+    Products
+{% endblock %}
+
+{% block content %}
+  <div class="container-fluid" style="padding: 0 10%">
+        <div class="text-center">
+            <br>
+            <h3> {{ name_of_category.name }}</h3>
+            <br>
+            <br>
+        </div>
+        <div class="row align-items-start">
+            {% for product in products_per_category %}
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" class="card-img-top" alt="..."
+                                 style="width: 70%; height: 200px">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name|truncatewords:2 }}</h5>
+                            <p class="card-text">{{ product.description|truncatewords:3 }}</p>
+
+                            {% if perms.product.change_product %}
+                            <a href="{% url 'update_product' product.id %}" class="btn btn-primary">Update</a>
+                            {% endif %}
+
+{#                            <a href="{% url 'delete_product' product.id %}" class="btn btn-primary">Delete</a>#}
+{#                            <a href="{% url 'detail_product' product.id %}" class="btn btn-primary">Details</a>#}
+
+                            {% if perms.product.delete_product %}
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">
+                                Delete
+                            </button>
+                            {% endif %}
+
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">{{ product.name }}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Do you want to delete this product {{ product.name }}?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                Close
+                                            </button>
+
+                                            <a href="{% url 'delete_with_popup' product.id %}" class="btn btn-danger">Delete</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% if perms.product.view_product %}
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#details_{{ product.id }}">
+                                Details
+                            </button>
+                            {% endif %}
+
+                             <div class="modal fade" id="details_{{ product.id }}" tabindex="-1"
+                                 aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">{{ product.name }}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>{{ product.description }}</p>
+                                            <p>{{ product.created_at }}</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

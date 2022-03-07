@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block title %}
+    List of categories
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="text-center"><br>
+            <h3>List of categories</h3>
+        </div>
+        <div class="col-md-6 offset-md-3">
+
+            <form method="get">
+                {{ filters.form }}
+                <br>
+                <br>
+                <button type="submit" class="btn btn-success">Search</button>
+                <br>
+                <br>
+            </form>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Created at</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for category in all_categories %}
+                    <tr>
+                        <td>{{ category.name }}</td>
+                        <td>{{ category.description }}</td>
+                        <td>{{ category.created_at }}</td>
+                        <td>
+                            {% if perms.category.change_category %}
+                                <a href="{% url 'update_category' category.id %}" class="btn btn-primary">Update</a>
+                            {% endif %}
+                            {% if perms.category.delete_category %}
+                                <a href="{% url 'delete_category' category.id %}" class="btn btn-primary">Delete</a>
+                            {% endif %}
+                            {% if perms.category.view_category %}
+                                <a href="{% url 'detail_category' category.id %}" class="btn btn-primary">Details</a>
+                            {% endif %}
+
+                            {% if perms.category.delete_category_by_popup %}
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">
+                                    pop Delete
+                                </button>
+                            {% endif %}
+
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">{{ category.name }}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Do you want to delete this category {{ category.name }}?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <a href="{% url 'delete_with_popup' category.id %}" class="btn btn-danger">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% if perms.category.detail_category_by_popup %}
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#details_{{ category.id }}">
+                                    pop Details
+                                </button>
+                            {% endif %}
+
+                            <div class="modal fade" id="details_{{ category.id }}" tabindex="-1"
+                                 aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">{{ category.name }}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>{{ category.description }}</p>
+                                            <p>{{ category.created_at }}</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+
+
+        </div>
+    </div>
+{% endblock %}

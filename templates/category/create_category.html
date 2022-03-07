@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}
+    Create a new category
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-6 offset-md-3">
+                <div>
+                    <h1 class=text-center> Create a new category</h1>
+                </div>
+                <form method="post">
+                    {% csrf_token %}
+{#                     {{ form.as_p }}#}
+                    {% for field in form %}
+                        {{ field.label }}
+                        {{ field }}
+                        {{ field.errors }}
+                    {% endfor %}
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-outline-primary">Save a new category</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

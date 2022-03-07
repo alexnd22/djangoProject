@@ -1,0 +1,10 @@
+{%  extends 'base.html' %}
+{% block title %} All brands {% endblock %}
+{%  block content %}
+   {% for brand in all_brands %}
+        <p>Name : {{ brand.name }}</p>
+        <p>Model: {{ brand.model }}</p>
+        <p>Year: {{ brand.year }}</p>
+    {% endfor %}
+    <a href="{% url 'all_stundents' %}">Go to List of students</a>
+{% endblock %}
