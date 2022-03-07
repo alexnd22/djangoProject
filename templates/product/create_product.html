@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}
+    Create a new product
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-6 offset-md-3">
+                <div>
+                    <h1 class=text-center>Create a new product</h1>
+                </div>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-outline-secondary">Save a new product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

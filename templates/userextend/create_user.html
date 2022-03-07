@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Create User
+{% endblock %}
+
+{% block content %}
+    <br>
+    <br>
+    <div class="container-fluid">
+        <div class="row">
+            <div>
+                <h1 class=text-center>Create user</h1>
+                <div class="card"><br><br>
+                    <div class="col-md-6 offset-md-3">
+
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                {{ form.as_p }}
+                            </div>
+                            <div class="card-footer text-center">
+                                <button type="submit" class="btn btn-outline-secondary">Create user</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
