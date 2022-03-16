@@ -25,5 +25,6 @@ urlpatterns = [
     path('', include('product.urls')),
     path('', include('userextend.urls')),
     path('', include('django.contrib.auth.urls')),
-    path('web-scrapping/', web_scrapp.get_data_web_scrapping, name='web_scrapping')
+    path('web-scrapping/', web_scrapp.get_data_web_scrapping, name='web_scrapping'),
+    path('rest-api/', include('rest_framework.urls'))
 ]
