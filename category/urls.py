@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 
-from category import views, insert
+from category import views, insert, update
 
 urlpatterns = [
     path('create-category/', views.CategoryCreateView.as_view(), name='create_category'),
@@ -12,7 +12,9 @@ urlpatterns = [
     path('delete-category-popup/<int:pk>/', views.delete_category_with_popup, name='delete_with_popup'),
     path('detail-category/<int:pk>/', views.CategoryDetailView.as_view(), name='detail_category'),
     path('detail-category-with-popup/<int:pk>/', views.delete_category_with_popup, name='detail_category_with_popup'),
-    path('import-data/', insert.import_data, name='import_data')
+    path('import-data/', insert.import_data, name='import_data'),
+    path('api-category/', views.CategoryApiView.as_view(), name='api_category'),
+    path('update-data-category/', update.update_excel_category, name='update_data')
 
 ]
 if settings.DEBUG:

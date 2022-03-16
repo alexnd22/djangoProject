@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'product',
     'userextend',
     'permission',
-    'django_filters'
+    'django_filters',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
